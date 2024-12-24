@@ -2,25 +2,26 @@
 <html>
 <head>
     <title>ESP Control</title>
+    <script>
+        // JavaScript function to change the status dynamically
+        let statusValue = "False";  // Initialize status as "False"
+        
+        function toggleStatus() {
+            // Toggle between "True" and "False"
+            statusValue = (statusValue === "True") ? "False" : "True";
+            document.getElementById("status").innerText = statusValue;
+        }
+
+        // Periodic update (for example, every 5 seconds)
+        setInterval(function() {
+            statusValue = (statusValue === "True") ? "False" : "True";
+            document.getElementById("status").innerText = statusValue;
+        }, 5000);
+    </script>
 </head>
 <body>
     <h1>ESP Remote Control</h1>
-    <button id="setTrueButton" onclick="setTrueFor10Seconds()">Set True for 10 Seconds</button>
-    <p>Status: <span id="status">True</span></p>
-
-    <script>
-        // Function to set the value to true for 10 seconds
-        function setTrueFor10Seconds() {
-            const statusLabel = document.getElementById("status");
-
-            // Set the status to "True"
-            statusLabel.innerText = "True";
-
-            // After 10 seconds, revert back to "False"
-            setTimeout(() => {
-                statusLabel.innerText = "False";
-            }, 10000);
-        }
-    </script>
+    <button onclick="toggleStatus()">Toggle Status</button>
+    <p>Status: <span id="status">False</span></p> <!-- Dynamic Status -->
 </body>
 </html>

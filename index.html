@@ -9,18 +9,25 @@
     <p>Status: <span id="status">False</span></p>
 
     <script>
+        let status = "False"; // Variable to track the status
+
         // Function to set the value to true for 10 seconds
         function setTrueFor10Seconds() {
-            const statusLabel = document.getElementById("status");
-
             // Set the status to "True"
-            statusLabel.innerText = "True";
+            status = "True";
+            document.getElementById("status").innerText = "True";
 
             // After 10 seconds, revert back to "False"
             setTimeout(() => {
-                statusLabel.innerText = "False";
+                status = "False";
+                document.getElementById("status").innerText = "False";
             }, 10000);
         }
+
+        // Function to send status to the ESP32 at 2Hz
+        setInterval(() => {
+            fetch(`http://<ESP32_IP>/status?value=${status}`);
+        }, 500); // Send every 500ms (2Hz)
     </script>
 </body>
 </html>

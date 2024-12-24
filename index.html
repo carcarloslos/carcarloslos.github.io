@@ -5,46 +5,22 @@
 </head>
 <body>
     <h1>ESP Remote Control</h1>
-    <button id="toggleButton" onclick="toggleBool()">Toggle Bool</button>
-    <p>Status: <span id="status">Unknown</span></p>
+    <button id="setTrueButton" onclick="setTrueFor10Seconds()">Set True for 10 Seconds</button>
+    <p>Status: <span id="status">False</span></p>
 
     <script>
-        const espUrl = "http://192.168.0.59"; // Replace with your ESP's static IP
+        // Function to set the value to true for 10 seconds
+        function setTrueFor10Seconds() {
+            const statusLabel = document.getElementById("status");
 
-        // Function to toggle the Bool
-        async function toggleBool() {
-            try {
-                const response = await fetch(`${espUrl}/toggle`, { method: "POST" });
-                if (response.ok) {
-                    alert("Bool toggled!");
-                    getBoolStatus(); // Update status after toggling
-                } else {
-                    alert("Failed to toggle Bool.");
-                }
-            } catch (error) {
-                console.error("Error toggling Bool:", error);
-                alert("Could not reach ESP.");
-            }
+            // Set the status to "True"
+            statusLabel.innerText = "True";
+
+            // After 10 seconds, revert back to "False"
+            setTimeout(() => {
+                statusLabel.innerText = "False";
+            }, 10000);
         }
-
-        // Function to fetch the current Bool status
-        async function getBoolStatus() {
-            try {
-                const response = await fetch(`${espUrl}/status`);
-                if (response.ok) {
-                    const data = await response.json();
-                    document.getElementById("status").innerText = data.boolStatus ? "True" : "False";
-                } else {
-                    document.getElementById("status").innerText = "Error";
-                }
-            } catch (error) {
-                console.error("Error fetching status:", error);
-                document.getElementById("status").innerText = "Disconnected";
-            }
-        }
-
-        // Fetch the initial status when the page loads
-        getBoolStatus();
     </script>
 </body>
 </html>
